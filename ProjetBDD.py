@@ -6,7 +6,7 @@ import pandas as pd
 # Try to connect to an existing database
 print('Connexion a la base de donnees...')
 USERNAME="marru"
-PASSWORD="mdpbdd" # `a remplacer par le mot de passe d’acces aux bases
+PASSWORD="mdp" # `a remplacer par le mot de passe d’acces aux bases
 try:
     conn = psycopg2.connect(host='localhost', dbname=USERNAME,user=USERNAME,password=PASSWORD)
 except Exception as e :
