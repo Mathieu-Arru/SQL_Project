@@ -40,6 +40,3 @@ libelle varchar(30) NOT NULL; """)
 print("Table DEPARTEMENTS creee avec succes dans PostgreSQL")
 
 
-
-test
-
