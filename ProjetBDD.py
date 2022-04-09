@@ -41,5 +41,5 @@ print("Table DEPARTEMENTS creee avec succes dans PostgreSQL")
 
 
 
-
+test
 
