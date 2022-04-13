@@ -59,8 +59,7 @@ def insert(dataframe, command, liste, nom=""):
             exit("error when running: " + command + " : " + str(e))
     # Nombre de lignes inserees
     count = cur.rowcount
-    print(count,
-          f"enregistrement(s) insere(s) avec succes dans la table {nom}.")
+    print(count,f"enregistrement(s) insere(s) avec succes dans la table {nom}.")
 
   
 # Insertion de la table Régions

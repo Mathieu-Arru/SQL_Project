@@ -2,7 +2,6 @@ import numpy
 import psycopg2  # Python SQL driver for PostgreSQL
 import psycopg2.extras
 import pandas as pd
-from RegDep_Insert import insert
 
 # Try to connect to an existing database
 print('Connexion a la base de donnees...')
@@ -26,12 +25,38 @@ df_pop_dep.rename( columns = {'Unnamed: 0' : 'Numero', 'Unnamed: 1': 'NomDep'}, 
 df_pop_reg.rename( columns = {'Unnamed: 0' : 'Numero', 'Unnamed: 1':'NomReg'})
 col_pop_dep = df_pop_dep.columns.values.tolist()
 
+# Fonction d'insertion dans les tables
+def insert(dataframe, command, liste, nom=""):
+    print("Execution sur la base de donnees de la commande d’insertion avec les valeurs")
+    for i in range(dataframe.shape[0]):
+        values = []
+        for j in liste:
+            if type(dataframe.iloc[i][j]) is numpy.int64:
+                values.append(int(dataframe.iloc[i][j]))
+            elif dataframe.iloc[i][j] == "2A":
+                values.append(201)
+            elif dataframe.iloc[i][j] == "2B":
+                values.append(202)
+            else:
+                values.append(dataframe.iloc[i][j])
+        try:
+            # Lancement de la requête.
+            cur.execute(command, values)
+        except Exception as e:
+            # en cas d’erreur, fermeture de la connexion
+            cur.close()
+            conn.close()
+            exit("error when running: " + command + " : " + str(e))
+    # Nombre de lignes inserees
+    count = cur.rowcount
+    print(count,f"enregistrement(s) insere(s) avec succes dans la table {nom}.")
+
 
 # Création de la table Indicateur libelle
-cur.execute("""CREATE TABLE public.indicateur_libelle(
+cur.execute("""CREATE TABLE public.idlibelle(
 IdI int PRIMARY KEY NOT NULL,
-libelle varchar(30) NOT NULL); """)
-print("Table indicateur_libelle creee avec succes dans PostgreSQL")
+libelle varchar(100) NOT NULL); """)
+print("Table idlibelle creee avec succes dans PostgreSQL")
 
 # Insertion de la table Indicateur libelle
 # Create the pandas DataFrame
@@ -52,15 +77,14 @@ df_indicateur_libelle = pd.DataFrame(data, columns = ["IdI","libelle"])
 
 # Insertion
 columns_list = [0,1]
-command = "INSERT INTO indicateur_libelle(IdI,libelle) VALUES (%s,%s)"
-insert(df_indicateur_libelle, command, columns_list, "indicateur_libelle")
-
+command = "INSERT INTO idlibelle(IdI,libelle) VALUES (%s,%s)"
+insert(df_indicateur_libelle, command, columns_list, "idlibelle")
 
 
 # Création de la table Indicateur Région
 cur.execute("""CREATE TABLE public.indicateurR(
 IdR int NOT NULL references region(IdR),
-IdI int NOT NULL references indicateur_libelle(IdI),
+IdI int NOT NULL references idlibelle(IdI),
 annee int NOT NULL,
 valeur float NOT NULL,
 PRIMARY KEY (IdR, IdI, annee)); """)
@@ -69,10 +93,12 @@ print("Table indicateurR creee avec succes dans PostgreSQL")
 # Création de la table Indicateur Département
 cur.execute("""CREATE TABLE public.indicateurD(
 IdD int NOT NULL references departement(IdD),
-IdI int NOT NULL references indicateur_libelle(IdI),
+IdI int NOT NULL references idlibelle(IdI),
 annee int NOT NULL,
 valeur float NOT NULL,
 PRIMARY KEY (IdD, IdI, annee)); """)
 print("Table indicateurD creee avec succes dans PostgreSQL")
 
-
+cur.close()
+conn.commit()
+conn.close()
