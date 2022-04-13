@@ -91,9 +91,11 @@ PRIMARY KEY (IdR, IdI, annee)); """)
 print("Table indicateurR creee avec succes dans PostgreSQL")
 
 # Insertion dans la table Indicateur Région
+"""
 columns_list = [0,2]
-command = "INSERT INTO indicateurR(IdR,nom,libelle) VALUES (%s,%s,2012)"
+command = "INSERT INTO indicateurR(IdR,valeur,annee,IdI) VALUES (%s,%s,2012,1)"
 insert(df_pop_reg, command, columns_list, "indicateurR")
+"""
 
 # Création de la table Indicateur Département
 cur.execute("""CREATE TABLE public.indicateurD(
