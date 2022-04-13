@@ -61,13 +61,13 @@ def insert(dataframe, command, liste, nom=""):
     count = cur.rowcount
     print(count,f"enregistrement(s) insere(s) avec succes dans la table {nom}.")
 
-  
-# Insertion de la table Régions
+
+# Insertion dans la table Régions
 columns_list = [0,3,5]
 command = "INSERT INTO region(IdR,nom,libelle) VALUES (%s,%s,%s)"
 insert(df_regions, command, columns_list, "region")
 
-# Insertion de la table Départements
+# Insertion dans la table Départements
 columns_list = [0,1,4,6]
 command = "INSERT INTO departement(IdD,IdR,nom,libelle) VALUES (%s,%s,%s,%s)"
 insert(df_departements, command, columns_list, "departement")
