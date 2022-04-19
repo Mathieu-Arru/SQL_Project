@@ -55,8 +55,11 @@ def insert(dataframe, command, liste, nom=""):
 
 
 # Création de la table Indicateur libelle
+# Ajout de la colonne Thme qui correspond à un entier pour les themes sociaux, eco ou pop (2,1,0)
+  
 cur.execute("""CREATE TABLE public.idlibelle(
 IdI int PRIMARY KEY NOT NULL,
+Theme int NOT NULL,
 libelle varchar(100) NOT NULL); """)
 print("Table idlibelle creee avec succes dans PostgreSQL")
 
@@ -74,12 +77,18 @@ libelle_list = ["Population","Taux d'activité (%)","Taux d'emploi (%)","Part de
                 "Part de la population estimée en zone inondable (%)"]
 
 for i in range(len(libelle_list)):
-  data.append([i+1,libelle_list[i]])
-df_indicateur_libelle = pd.DataFrame(data, columns = ["IdI","libelle"])
+  #Les if pour attribution du bon identifiant de theme
+    if i==0:
+        data.append([i+1,0,libelle_list[i]])
+    elif i<10:
+        data.append([i+1,1,libelle_list[i]])
+    else:
+        data.append([i+1,2,libelle_list[i]])
+df_indicateur_libelle = pd.DataFrame(data, columns = ["IdI","Theme","libelle"])
 
 # Insertion
-columns_list = [0,1]
-command = "INSERT INTO idlibelle(IdI,libelle) VALUES (%s,%s)"
+columns_list = [0,1,2]
+command = "INSERT INTO idlibelle(IdI,Theme,libelle) VALUES (%s,%s,%s)"
 insert(df_indicateur_libelle, command, columns_list, "idlibelle")
 
 
