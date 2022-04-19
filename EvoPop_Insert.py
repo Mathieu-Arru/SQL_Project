@@ -30,6 +30,8 @@ def insert(dataframe, command, liste, nom=""):
     print("Execution sur la base de donnees de la commande d’insertion avec les valeurs")
     for i in range(dataframe.shape[0]):
         values = []
+        if dataframe.iloc[i][0] == "M" or dataframe.iloc[i][0] == "F":
+            continue
         for j in liste:
             if type(dataframe.iloc[i][j]) is numpy.int64:
                 values.append(int(dataframe.iloc[i][j]))
@@ -91,11 +93,17 @@ PRIMARY KEY (IdR, IdI, annee)); """)
 print("Table indicateurR creee avec succes dans PostgreSQL")
 
 # Insertion dans la table Indicateur Région
-"""
 columns_list = [0,2]
 command = "INSERT INTO indicateurR(IdR,valeur,annee,IdI) VALUES (%s,%s,2012,1)"
 insert(df_pop_reg, command, columns_list, "indicateurR")
-"""
+columns_list = [0,3]
+command = "INSERT INTO indicateurR(IdR,valeur,annee,IdI) VALUES (%s,%s,2017,1)"
+insert(df_pop_reg, command, columns_list, "indicateurR")
+columns_list = [0,4]
+command = "INSERT INTO indicateurR(IdR,valeur,annee,IdI) VALUES (%s,%s,2020,1)"
+insert(df_pop_reg, command, columns_list, "indicateurR")
+
+
 
 # Création de la table Indicateur Département
 cur.execute("""CREATE TABLE public.indicateurD(
@@ -105,6 +113,20 @@ annee int NOT NULL,
 valeur float NOT NULL,
 PRIMARY KEY (IdD, IdI, annee)); """)
 print("Table indicateurD creee avec succes dans PostgreSQL")
+
+# Insertion dans la table Indicateur Département
+columns_list = [0,2]
+command = "INSERT INTO indicateurD(IdD,valeur,annee,IdI) VALUES (%s,%s,2012,1)"
+insert(df_pop_dep, command, columns_list, "indicateurD")
+columns_list = [0,3]
+command = "INSERT INTO indicateurD(IdD,valeur,annee,IdI) VALUES (%s,%s,2017,1)"
+insert(df_pop_dep, command, columns_list, "indicateurD")
+columns_list = [0,4]
+command = "INSERT INTO indicateurD(IdD,valeur,annee,IdI) VALUES (%s,%s,2018,1)"
+insert(df_pop_dep, command, columns_list, "indicateurD")
+columns_list = [0,5]
+command = "INSERT INTO indicateurD(IdD,valeur,annee,IdI) VALUES (%s,%s,2020,1)"
+insert(df_pop_dep, command, columns_list, "indicateurD")
 
 cur.close()
 conn.commit()
