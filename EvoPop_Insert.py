@@ -56,7 +56,7 @@ def insert(dataframe, command, liste, nom=""):
 
 
 # Création de la table Indicateur libelle
-# Ajout de la colonne Thme qui correspond à un entier pour les themes sociaux, eco ou pop (2,1,0)
+# Ajout de la colonne Thème qui correspond à un entier pour les themes sociaux, eco ou pop (2,1,0)
   
 cur.execute("""CREATE TABLE public.idlibelle(
 IdI int PRIMARY KEY NOT NULL,
@@ -87,7 +87,8 @@ for i in range(len(libelle_list)):
         data.append([i+1,2,libelle_list[i]])
 df_indicateur_libelle = pd.DataFrame(data, columns = ["IdI","Theme","libelle"])
 
-# Insertion
+
+# Insertion de la ID Libelle
 columns_list = [0,1,2]
 command = "INSERT INTO idlibelle(IdI,Theme,libelle) VALUES (%s,%s,%s)"
 insert(df_indicateur_libelle, command, columns_list, "idlibelle")
@@ -103,6 +104,7 @@ sexe int NOT NULL,
 PRIMARY KEY (IdR, IdI, annee, sexe)); """)
 print("Table indicateurR creee avec succes dans PostgreSQL")
 
+
 # Insertion dans la table Indicateur Région
 columns_list = [0,2]
 command = "INSERT INTO indicateurR(IdR,valeur,annee,IdI,sexe) VALUES (%s,%s,2012,1,0)"
@@ -115,7 +117,6 @@ command = "INSERT INTO indicateurR(IdR,valeur,annee,IdI,sexe) VALUES (%s,%s,2020
 insert(df_pop_reg, command, columns_list, "indicateurR")
 
 
-
 # Création de la table Indicateur Département
 cur.execute("""CREATE TABLE public.indicateurD(
 IdD int NOT NULL references departement(IdD),
@@ -125,6 +126,7 @@ valeur float NOT NULL,
 sexe int NOT NULL,
 PRIMARY KEY (IdD, IdI, annee, sexe)); """)
 print("Table indicateurD creee avec succes dans PostgreSQL")
+
 
 # Insertion dans la table Indicateur Département
 columns_list = [0,2]

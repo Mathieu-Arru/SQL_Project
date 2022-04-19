@@ -11,7 +11,7 @@ try:
     conn = psycopg2.connect(host='localhost', dbname=USERNAME,user=USERNAME,password=PASSWORD)
 except Exception as e :
     exit("Connexion impossible a la base de donnees: " + str(e))
-    
+
 print('Connecte a la base de donnees')
 #preparation de l’execution des requetes (a ne faire qu’une fois)
 cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
@@ -24,6 +24,7 @@ IdR int PRIMARY KEY NOT NULL,
 nom varchar(30) NOT NULL,
 libelle varchar(30) NOT NULL);""")
 print("Table region creee avec succes dans PostgreSQL")
+
 
 # Création de la table Départements
 df_departements = pd.read_csv("departement2020.csv", sep=",")
