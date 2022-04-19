@@ -89,18 +89,19 @@ IdR int NOT NULL references region(IdR),
 IdI int NOT NULL references idlibelle(IdI),
 annee int NOT NULL,
 valeur float NOT NULL,
-PRIMARY KEY (IdR, IdI, annee)); """)
+sexe int NOT NULL,
+PRIMARY KEY (IdR, IdI, annee, sexe)); """)
 print("Table indicateurR creee avec succes dans PostgreSQL")
 
 # Insertion dans la table Indicateur Région
 columns_list = [0,2]
-command = "INSERT INTO indicateurR(IdR,valeur,annee,IdI) VALUES (%s,%s,2012,1)"
+command = "INSERT INTO indicateurR(IdR,valeur,annee,IdI,sexe) VALUES (%s,%s,2012,1,0)"
 insert(df_pop_reg, command, columns_list, "indicateurR")
 columns_list = [0,3]
-command = "INSERT INTO indicateurR(IdR,valeur,annee,IdI) VALUES (%s,%s,2017,1)"
+command = "INSERT INTO indicateurR(IdR,valeur,annee,IdI,sexe) VALUES (%s,%s,2017,1,0)"
 insert(df_pop_reg, command, columns_list, "indicateurR")
 columns_list = [0,4]
-command = "INSERT INTO indicateurR(IdR,valeur,annee,IdI) VALUES (%s,%s,2020,1)"
+command = "INSERT INTO indicateurR(IdR,valeur,annee,IdI,sexe) VALUES (%s,%s,2020,1,0)"
 insert(df_pop_reg, command, columns_list, "indicateurR")
 
 
@@ -111,21 +112,22 @@ IdD int NOT NULL references departement(IdD),
 IdI int NOT NULL references idlibelle(IdI),
 annee int NOT NULL,
 valeur float NOT NULL,
-PRIMARY KEY (IdD, IdI, annee)); """)
+sexe int NOT NULL,
+PRIMARY KEY (IdD, IdI, annee, sexe)); """)
 print("Table indicateurD creee avec succes dans PostgreSQL")
 
 # Insertion dans la table Indicateur Département
 columns_list = [0,2]
-command = "INSERT INTO indicateurD(IdD,valeur,annee,IdI) VALUES (%s,%s,2012,1)"
+command = "INSERT INTO indicateurD(IdD,valeur,annee,IdI,sexe) VALUES (%s,%s,2012,1,0)"
 insert(df_pop_dep, command, columns_list, "indicateurD")
 columns_list = [0,3]
-command = "INSERT INTO indicateurD(IdD,valeur,annee,IdI) VALUES (%s,%s,2017,1)"
+command = "INSERT INTO indicateurD(IdD,valeur,annee,IdI,sexe) VALUES (%s,%s,2017,1,0)"
 insert(df_pop_dep, command, columns_list, "indicateurD")
 columns_list = [0,4]
-command = "INSERT INTO indicateurD(IdD,valeur,annee,IdI) VALUES (%s,%s,2018,1)"
+command = "INSERT INTO indicateurD(IdD,valeur,annee,IdI,sexe) VALUES (%s,%s,2018,1,0)"
 insert(df_pop_dep, command, columns_list, "indicateurD")
 columns_list = [0,5]
-command = "INSERT INTO indicateurD(IdD,valeur,annee,IdI) VALUES (%s,%s,2020,1)"
+command = "INSERT INTO indicateurD(IdD,valeur,annee,IdI,sexe) VALUES (%s,%s,2020,1,0)"
 insert(df_pop_dep, command, columns_list, "indicateurD")
 
 cur.close()

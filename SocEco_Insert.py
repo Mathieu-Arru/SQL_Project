@@ -24,5 +24,5 @@ df_soc_dep = pd.read_excel(xls, "Social",skiprows=33,skipfooter=5)
 df_eco_reg = pd.read_excel(xls,"Economie", skiprows=5,skipfooter=114)
 df_eco_dep = pd.read_excel(xls, "Economie", skiprows=35, skipfooter=2)
 libelle_list_Economie = [2,3,3,4,5,5,6,6,7,7,,8,8,9,10,10]
-libelle_list_social = 
-[]
+libelle_list_social = []
+
