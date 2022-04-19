@@ -22,8 +22,9 @@ df_pop_dep = pd.read_excel(xls,"DEP", skiprows=3, skipfooter=2)
 df_pop_reg = pd.read_excel(xls, "REG",skiprows=3, skipfooter=2)
 
 df_pop_dep.rename( columns = {'Unnamed: 0' : 'Numero', 'Unnamed: 1': 'NomDep'}, inplace = True)
-df_pop_reg.rename( columns = {'Unnamed: 0' : 'Numero', 'Unnamed: 1':'NomReg'})
-col_pop_dep = df_pop_dep.columns.values.tolist()
+df_pop_reg.rename( columns = {'Unnamed: 0' : 'Numero', 'Unnamed: 1':'NomReg'}, inplace = True)
+
+
 
 # Fonction d'insertion dans les tables
 def insert(dataframe, command, liste, nom=""):
